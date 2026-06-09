@@ -1,1444 +1,611 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Daksh Karangiya | Portfolio</title>
-  
-  <!-- Modern Fonts -->
+  <title>Temp - Premium Temperature Converter</title>
+
+  <!-- Google Fonts for premium typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    :root {
-      --port-bg: #040209;
-      --port-bg-darker: #020105;
-      --port-surface: rgba(22, 14, 40, 0.45);
-      --port-surface-hover: rgba(30, 20, 55, 0.65);
-      --port-border: rgba(168, 85, 247, 0.12);
-      --port-border-hover: rgba(168, 85, 247, 0.35);
-      --port-primary: #a855f7;        /* Amethyst Purple */
-      --port-primary-glow: rgba(168, 85, 247, 0.2);
-      --port-secondary: #00f5d4;      /* Neon Teal */
-      --port-text: #f3f4f6;
-      --port-text-muted: #9ca3af;
-      --port-font-title: 'Outfit', sans-serif;
-      --port-font-body: 'Inter', sans-serif;
-      --port-font-code: 'Fira Code', monospace;
-      --port-transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      scroll-behavior: smooth;
+      transition: background-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ---- DARK MODE (Aurorean Dusk) ---- */
+    [data-theme="dark"] {
+      --bg: #090616;
+      --card-bg: rgba(22, 17, 43, 0.7);
+      --card-border: rgba(139, 92, 246, 0.25);
+      --input-bg: rgba(9, 6, 22, 0.6);
+      --label: #d8b4fe;
+      --text: #ffffff;
+      --subtext: #94a3b8;
+      --border: rgba(139, 92, 246, 0.2);
+      --placeholder: #4b5563;
+      --accent: #f43f5e;
+      --accent2: #8b5cf6;
+      --btn-grad1: #f43f5e;
+      --btn-grad2: #8b5cf6;
+      --btn-hover1: #e11d48;
+      --btn-hover2: #7c3aed;
+      --result-bg: rgba(244, 63, 94, 0.08);
+      --result-border: #f43f5e;
+      --error-bg: rgba(239, 68, 68, 0.1);
+      --error-border: #ef4444;
+      --error-text: #fca5a5;
+      --formula-bg: rgba(139, 92, 246, 0.08);
+      --formula-border: #8b5cf6;
+      --formula-label: #d8b4fe;
+      --formula-text: #cbd5e1;
+      --divider: rgba(139, 92, 246, 0.15);
+      --hint: #64748b;
+      --footer: #475569;
+      --toggle-bg: rgba(139, 92, 246, 0.2);
+      --glow-opacity: 0.25;
+    }
+
+    /* ---- LIGHT MODE (Soft Rose Petal & Lavender) ---- */
+    [data-theme="light"] {
+      --bg: #f5f3ff;
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --card-border: rgba(139, 92, 246, 0.15);
+      --input-bg: #fcfbff;
+      --label: #6d28d9;
+      --text: #1e1b4b;
+      --subtext: #6b7280;
+      --border: #ddd6fe;
+      --placeholder: #9ca3af;
+      --accent: #e11d48;
+      --accent2: #7c3aed;
+      --btn-grad1: #e11d48;
+      --btn-grad2: #7c3aed;
+      --btn-hover1: #be123c;
+      --btn-hover2: #6d28d9;
+      --result-bg: rgba(225, 29, 72, 0.05);
+      --result-border: #e11d48;
+      --error-bg: #fff1f2;
+      --error-border: #ef4444;
+      --error-text: #b91c1c;
+      --formula-bg: rgba(124, 58, 237, 0.05);
+      --formula-border: #7c3aed;
+      --formula-label: #6d28d9;
+      --formula-text: #4b5563;
+      --divider: #e9e3ff;
+      --hint: #9ca3af;
+      --footer: #9ca3af;
+      --toggle-bg: #ddd6fe;
+      --glow-opacity: 0.1;
     }
 
     body {
-      background-color: var(--port-bg);
-      color: var(--port-text);
-      font-family: var(--port-font-body);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      background-image: radial-gradient(circle at 10% 20%, rgba(244, 63, 94, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.05) 0%, transparent 40%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
       overflow-x: hidden;
-      line-height: 1.6;
+      position: relative;
     }
 
-    /* Selection Highlight */
-    ::selection {
-      background-color: var(--port-primary);
-      color: white;
-    }
-
-    /* Custom scrollbar */
-    ::-webkit-scrollbar {
-      width: 7px;
-    }
-    ::-webkit-scrollbar-track {
-      background: var(--port-bg);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: rgba(168, 85, 247, 0.25);
-      border-radius: 4px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--port-primary);
-    }
-
-    /* Glow blobs background */
-    .mesh-glow-left {
+    /* ---- Background Glow Blobs ---- */
+    .bg-glow {
       position: absolute;
-      top: 10%;
-      left: -10vw;
       width: 45vw;
       height: 45vw;
-      background: radial-gradient(circle, rgba(168, 85, 247, 0.08) 0%, transparent 70%);
-      pointer-events: none;
+      max-width: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
       z-index: 0;
+      opacity: var(--glow-opacity);
+      pointer-events: none;
+      animation: floatGlow 15s ease-in-out infinite;
     }
 
-    .mesh-glow-right {
-      position: absolute;
-      top: 40%;
-      right: -10vw;
-      width: 50vw;
-      height: 50vw;
-      background: radial-gradient(circle, rgba(0, 245, 212, 0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+    .bg-glow-1 {
+      background: var(--accent);
+      top: -10%;
+      left: -10%;
     }
 
-    /* Header Nav */
-    .header-nav {
+    .bg-glow-2 {
+      background: var(--accent2);
+      bottom: -10%;
+      right: -10%;
+      animation-delay: -7.5s;
+    }
+
+    @keyframes floatGlow {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      50% {
+        transform: translate(40px, 40px) scale(1.1);
+      }
+    }
+
+    /* ---- TOGGLE BUTTON ---- */
+    .toggle-wrap {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 22px 8%;
-      backdrop-filter: blur(16px);
-      background-color: rgba(4, 2, 9, 0.75);
-      border-bottom: 1px solid var(--port-border);
-      transition: var(--port-transition);
-    }
-
-    .header-nav.sticky-active {
-      padding: 15px 8%;
-      background-color: rgba(4, 2, 9, 0.95);
-      border-color: rgba(168, 85, 247, 0.25);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-    }
-
-    .p-brand-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      text-decoration: none;
-      color: var(--port-text);
-      font-family: var(--port-font-title);
-    }
-
-    .logo-badge {
-      background: linear-gradient(135deg, var(--port-primary), var(--port-secondary));
-      color: #040209;
-      font-size: 12px;
-      font-weight: 800;
-      padding: 5px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.45);
-      display: inline-block;
-      line-height: 1;
-    }
-
-    .logo-text {
-      font-size: 21px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-
-    .logo-text span {
-      color: var(--port-primary);
-    }
-
-    .p-nav-menu {
-      display: flex;
-      list-style: none;
-      gap: 32px;
-      align-items: center;
-    }
-
-    .p-nav-menu a {
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--port-text-muted);
-      transition: var(--port-transition);
-      letter-spacing: 0.3px;
-    }
-
-    .p-nav-menu a:hover {
-      color: var(--port-primary);
-    }
-
-    .p-hire-btn {
-      text-decoration: none;
-      font-family: var(--port-font-title);
-      font-size: 13px;
-      font-weight: 700;
-      padding: 10px 22px;
-      background: var(--port-primary);
-      color: white;
-      border-radius: 8px;
-      border: 1px solid var(--port-primary);
-      transition: var(--port-transition);
-      box-shadow: 0 4px 14px var(--port-primary-glow);
-    }
-
-    .p-hire-btn:hover {
-      background: transparent;
-      color: var(--port-primary);
-      box-shadow: none;
-    }
-
-    /* Hero Layout */
-    .hero-wrapper {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      align-items: center;
-      padding: 120px 8% 80px;
-      gap: 60px;
-      position: relative;
+      top: 20px;
+      right: 20px;
       z-index: 10;
     }
 
-    .hero-details-box {
-      max-width: 600px;
-    }
-
-    .avail-status-tag {
-      display: inline-flex;
+    .toggle-btn {
+      background: var(--toggle-bg);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
       align-items: center;
       gap: 8px;
-      background: rgba(0, 245, 212, 0.08);
-      border: 1px solid rgba(0, 245, 212, 0.2);
-      padding: 6px 14px;
-      border-radius: 50px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--port-secondary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(8px);
     }
 
-    .avail-status-tag span.blink-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--port-secondary);
-      animation: blinkIndicator 1.8s infinite;
+    .toggle-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     }
 
-    @keyframes blinkIndicator {
-      0% { opacity: 0.3; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.1); }
-      100% { opacity: 0.3; transform: scale(0.9); }
+    /* ---- header ---- */
+    .header {
+      text-align: center;
+      margin-bottom: 35px;
+      z-index: 1;
     }
 
-    .hero-details-box h1 {
-      font-family: var(--port-font-title);
-      font-size: clamp(3rem, 5.5vw, 4.8rem);
+    .header h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 38px;
       font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -2px;
-      margin-bottom: 8px;
+      letter-spacing: -1px;
+      color: var(--text);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
 
-    .hero-details-box h1 span.gradient-txt {
-      background: linear-gradient(135deg, var(--port-primary), var(--port-secondary));
+    .header h1 span {
+      background: linear-gradient(135deg, var(--btn-grad1), var(--btn-grad2));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
-    .job-title-desc {
-      font-size: clamp(16px, 1.8vw, 19px);
-      font-weight: 500;
-      color: var(--port-text-muted);
-      margin-bottom: 22px;
-    }
-
-    .bio-desc-para {
+    .header p {
       font-size: 15px;
-      color: #9ba3b0;
-      line-height: 1.8;
-      max-width: 480px;
-      margin-bottom: 35px;
+      color: var(--subtext);
+      font-weight: 400;
     }
 
-    .hero-action-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn-custom {
-      text-decoration: none;
-      font-family: var(--port-font-title);
-      font-size: 15px;
-      font-weight: 700;
-      padding: 15px 32px;
-      border-radius: 10px;
-      transition: var(--port-transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-custom.primary-fill {
-      background: var(--port-primary);
-      color: white;
-      box-shadow: 0 8px 24px var(--port-primary-glow);
-    }
-
-    .btn-custom.primary-fill:hover {
-      transform: translateY(-3px);
-      background: white;
-      color: var(--port-bg);
-      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.2);
-    }
-
-    .btn-custom.glass-outline {
-      border: 1px solid var(--port-border);
-      background: rgba(255, 255, 255, 0.02);
-      color: var(--port-text);
-      backdrop-filter: blur(10px);
-    }
-
-    .btn-custom.glass-outline:hover {
-      border-color: var(--port-primary);
-      color: var(--port-primary);
-      transform: translateY(-2px);
-    }
-
-    /* Stats Grid */
-    .metric-stats-row {
-      display: flex;
-      gap: 40px;
-      margin-top: 45px;
-      padding-top: 35px;
-      border-top: 1px solid var(--port-border);
-    }
-
-    .metric-col .metric-num {
-      font-family: var(--port-font-title);
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--port-primary);
-    }
-
-    .metric-col .metric-lbl {
-      font-size: 11px;
-      color: var(--port-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-top: 2px;
-    }
-
-    /* Terminal Console Mockup */
-    .avatar-showcase {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .console-mockup {
+    /* ---- card ---- */
+    .card {
+      background-color: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 24px;
+      padding: 45px 40px;
       width: 100%;
-      max-width: 440px;
-      background: #0b0714;
-      border: 1px solid var(--port-border);
-      border-radius: 16px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-      overflow: hidden;
+      max-width: 480px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--card-border);
+      z-index: 1;
+      position: relative;
     }
 
-    .console-titlebar {
-      background: rgba(255, 255, 255, 0.03);
-      padding: 12px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-bottom: 1px solid var(--port-border);
-    }
-
-    .console-actions-dots {
-      display: flex;
-      gap: 6px;
-    }
-
-    .console-dot {
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-    }
-
-    .console-dot.red { background: #ff5f56; }
-    .console-dot.yellow { background: #ffbd2e; }
-    .console-dot.green { background: #27c93f; }
-
-    .console-title-txt {
-      font-family: var(--port-font-code);
-      font-size: 11px;
-      color: var(--port-text-muted);
-    }
-
-    .console-body {
-      padding: 24px;
-      font-family: var(--port-font-code);
+    /* ---- input section ---- */
+    .input-label {
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 13px;
-      min-height: 280px;
-      color: #dfdfdf;
-      line-height: 1.7;
-    }
-
-    .console-line {
+      font-weight: 700;
+      color: var(--label);
       margin-bottom: 8px;
-    }
-
-    .console-prompt {
-      color: var(--port-secondary);
-    }
-
-    .console-output-obj {
-      color: #df9cff;
-      padding-left: 15px;
-    }
-
-    /* About Section */
-    .profile-intro {
-      background-color: var(--port-bg-darker);
-      border-top: 1px solid var(--port-border);
-      border-bottom: 1px solid var(--port-border);
-      padding: 100px 8%;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    .section-tagline {
-      font-family: var(--port-font-title);
-      color: var(--port-primary);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      margin-bottom: 12px;
       display: block;
-    }
-
-    .section-headline {
-      font-family: var(--port-font-title);
-      font-size: clamp(2rem, 3.5vw, 3rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 25px;
-    }
-
-    .profile-bio-text p {
-      font-size: 15px;
-      color: var(--port-text-muted);
-      line-height: 1.8;
-      margin-bottom: 18px;
-    }
-
-    .profile-facts-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
-
-    .fact-card {
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      border-radius: 12px;
-      padding: 24px;
-      transition: var(--port-transition);
-    }
-
-    .fact-card:hover {
-      border-color: var(--port-primary);
-      transform: translateY(-2px);
-    }
-
-    .fact-card-label {
-      font-size: 11px;
-      color: var(--port-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 6px;
-    }
-
-    .fact-card-val {
-      font-family: var(--port-font-title);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--port-text);
-    }
-
-    /* Skills Grid */
-    .skills-arena {
-      padding: 100px 8%;
-      text-align: center;
-      position: relative;
-      z-index: 10;
-    }
-
-    .arena-title-box {
-      max-width: 600px;
-      margin: 0 auto 50px;
-    }
-
-    .badges-collection {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .tech-badge {
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      border-radius: 16px;
-      padding: 30px 20px;
-      width: 170px;
-      transition: var(--port-transition);
-    }
-
-    .tech-badge:hover {
-      border-color: var(--port-primary);
-      box-shadow: 0 10px 25px rgba(168, 85, 247, 0.1);
-      transform: translateY(-5px);
-    }
-
-    .tech-badge-icon {
-      font-size: 34px;
-      margin-bottom: 14px;
-      display: block;
-      transition: var(--port-transition);
-    }
-
-    .tech-badge:hover .tech-badge-icon {
-      transform: scale(1.1) rotate(5deg);
-    }
-
-    .tech-badge-name {
-      font-family: var(--port-font-title);
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--port-text);
-    }
-
-    .tech-badge-sub {
-      font-size: 12px;
-      color: var(--port-text-muted);
-      margin-top: 4px;
-    }
-
-    /* Projects Showcases */
-    .portfolio-works {
-      padding: 100px 8%;
-      background-color: var(--port-bg-darker);
-      border-top: 1px solid var(--port-border);
-      border-bottom: 1px solid var(--port-border);
-      position: relative;
-      z-index: 10;
-    }
-
-    .portfolio-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-      gap: 25px;
-      margin-top: 50px;
-    }
-
-    .portfolio-item {
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      border-radius: 16px;
-      padding: 35px;
-      transition: var(--port-transition);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .portfolio-item:hover {
-      border-color: var(--port-primary);
-      box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-      transform: translateY(-5px);
-    }
-
-    .work-cat-tag {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--port-secondary);
-      background: rgba(0, 245, 212, 0.08);
-      padding: 5px 14px;
-      border-radius: 50px;
-      align-self: flex-start;
-      margin-bottom: 20px;
-    }
-
-    .portfolio-item h3 {
-      font-family: var(--port-font-title);
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .portfolio-item p {
-      font-size: 14px;
-      color: var(--port-text-muted);
-      line-height: 1.6;
-      margin-bottom: 25px;
-      flex-grow: 1;
-    }
-
-    .work-anchor-link {
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--port-primary);
-      transition: var(--port-transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .work-anchor-link:hover {
-      color: var(--port-secondary);
-      gap: 8px;
-    }
-
-    /* Contact Details Arena */
-    .contact-container {
-      padding: 100px 8%;
-      position: relative;
-      z-index: 10;
-    }
-
-    .contact-inner-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      margin-top: 50px;
-      align-items: start;
-    }
-
-    .contact-meta-txt p {
-      font-size: 15px;
-      color: var(--port-text-muted);
-      line-height: 1.8;
-      margin-bottom: 35px;
-    }
-
-    .contact-ways-pack {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .contact-channel-item {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      border-radius: 14px;
-      padding: 20px 24px;
-      text-decoration: none;
-      transition: var(--port-transition);
-    }
-
-    .contact-channel-item:hover {
-      border-color: var(--port-primary);
-      box-shadow: 0 10px 20px rgba(168,85,247,0.05);
-      transform: translateX(5px);
-    }
-
-    .channel-icon {
-      font-size: 22px;
-      width: 46px;
-      height: 46px;
-      background: rgba(168, 85, 247, 0.1);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .channel-meta-lbl {
-      font-size: 11px;
-      color: var(--port-text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .channel-meta-val {
-      font-size: 14px;
-      color: var(--port-text);
-      font-weight: 500;
-      margin-top: 3px;
-    }
-
-    /* Form controls styles */
-    .contact-interactive-form {
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      padding: 40px;
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .form-group-item {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .form-group-item label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--port-text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .form-group-item input,
-    .form-group-item textarea {
-      background: rgba(4, 2, 9, 0.8);
-      border: 1px solid var(--port-border);
-      border-radius: 8px;
-      padding: 14px 18px;
-      color: white;
-      font-family: var(--port-font-body);
-      font-size: 14px;
+    .input-field {
+      width: 100%;
+      padding: 15px 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
       outline: none;
-      transition: var(--port-transition);
+      color: var(--text);
+      background-color: var(--input-bg);
+      margin-bottom: 24px;
     }
 
-    .form-group-item input:focus,
-    .form-group-item textarea:focus {
-      border-color: var(--port-primary);
-      box-shadow: 0 0 10px rgba(168, 85, 247, 0.15);
+    .input-field:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
     }
 
-    .btn-submit-mail {
-      background: var(--port-primary);
-      color: white;
-      border: none;
-      padding: 15px;
-      font-family: var(--port-font-title);
-      font-weight: 700;
+    .input-field::placeholder {
+      color: var(--placeholder);
+    }
+
+    /* ---- dropdown ---- */
+    .select-field {
+      width: 100%;
+      padding: 15px 18px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       font-size: 15px;
-      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      outline: none;
+      color: var(--text);
+      background-color: var(--input-bg);
+      margin-bottom: 30px;
       cursor: pointer;
-      transition: var(--port-transition);
-      box-shadow: 0 5px 15px var(--port-primary-glow);
     }
 
-    .btn-submit-mail:hover {
-      background: white;
-      color: var(--port-bg);
-      transform: translateY(-2px);
+    .select-field:focus {
+      border-color: var(--accent2);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
     }
 
-    /* Custom Social Card */
-    .linked-badge-card {
-      text-decoration: none;
-      background: var(--port-surface);
-      border: 1px solid var(--port-border);
-      border-radius: 16px;
-      padding: 26px;
-      text-align: center;
-      display: block;
-      transition: var(--port-transition);
-      margin-top: 25px;
-    }
-
-    .linked-badge-card:hover {
-      border-color: var(--port-primary);
-      transform: translateY(-4px);
-    }
-
-    .linked-badge-card .badge-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-
-    .linked-badge-card .badge-name {
-      font-family: var(--port-font-title);
-      font-size: 15px;
+    /* ---- convert button ---- */
+    .convert-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--btn-grad1), var(--btn-grad2));
+      color: white;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
       font-weight: 700;
-      color: var(--port-text);
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 20px rgba(244, 63, 94, 0.2);
     }
 
-    .linked-badge-card .badge-handle {
-      font-size: 13px;
-      color: var(--port-text-muted);
-      margin-top: 3px;
+    .convert-btn:hover {
+      background: linear-gradient(135deg, var(--btn-hover1), var(--btn-hover2));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(244, 63, 94, 0.35);
     }
 
-    /* Modal Styling */
-    .success-modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(4, 2, 9, 0.85);
-      backdrop-filter: blur(8px);
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    .success-modal-overlay.active {
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    .modal-box-card {
-      background: #0f0a1d;
-      border: 1px solid var(--port-primary);
-      padding: 40px;
-      border-radius: 20px;
-      max-width: 400px;
-      width: 90%;
-      text-align: center;
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-    }
-
-    .success-modal-overlay.active .modal-box-card {
+    .convert-btn:active {
       transform: translateY(0);
     }
 
-    .modal-tick-icon {
-      width: 60px;
-      height: 60px;
-      background: rgba(0, 245, 212, 0.1);
-      border: 2px solid var(--port-secondary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 26px;
-      color: var(--port-secondary);
-      margin: 0 auto 20px;
+    /* ---- result box ---- */
+    .result-box {
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 16px;
+      text-align: center;
+      display: none;
+      animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
 
-    .modal-box-card h4 {
-      font-family: var(--port-font-title);
-      font-size: 22px;
-      margin-bottom: 10px;
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    .modal-box-card p {
-      font-size: 14px;
-      color: var(--port-text-muted);
-      margin-bottom: 25px;
+    .result-box.success {
+      background-color: var(--result-bg);
+      border: 1.5px solid var(--result-border);
+      display: block;
     }
 
-    .btn-modal-close {
-      background: var(--port-primary);
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-family: var(--port-font-title);
+    .result-box.success .result-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
       font-weight: 700;
+      color: var(--subtext);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .result-box.success .result-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 42px;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: -0.5px;
+    }
+
+    .result-box.success .result-unit {
       font-size: 14px;
-      transition: var(--port-transition);
+      color: var(--subtext);
+      margin-top: 6px;
     }
 
-    .btn-modal-close:hover {
-      background: white;
-      color: var(--port-bg);
+    .result-box.error {
+      background-color: var(--error-bg);
+      border: 1.5px solid var(--error-border);
+      display: block;
     }
 
-    /* Footer Block */
-    .footer-wrapper {
-      background-color: var(--port-bg-darker);
-      border-top: 1px solid var(--port-border);
-      padding: 30px 8%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-      position: relative;
-      z-index: 10;
+    .result-box.error .error-msg {
+      font-size: 14px;
+      color: var(--error-text);
+      font-weight: bold;
     }
 
-    .footer-logo {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
-      color: var(--port-text);
-      font-family: var(--port-font-title);
-    }
-
-    .footer-wrapper p {
-      font-size: 13px;
-      color: var(--port-text-muted);
-    }
-
-    .footer-wrapper p span {
-      color: var(--port-primary);
-    }
-
-    /* Mobile Breakpoint Adaptations */
-    @media (max-width: 900px) {
-      .header-nav {
-        padding: 18px 5%;
-      }
-      .p-nav-menu {
-        display: none; /* hidden on small screen navigation for brevity */
-      }
-      .hero-wrapper {
-        grid-template-columns: 1fr;
-        padding-top: 100px;
-        text-align: center;
-        gap: 40px;
-      }
-      .avatar-showcase {
-        order: -1;
-      }
-      .avail-status-tag {
-        justify-content: center;
-      }
-      .bio-desc-para {
-        margin-left: auto;
-        margin-right: auto;
-      }
-      .hero-action-buttons {
-        justify-content: center;
-      }
-      .metric-stats-row {
-        justify-content: center;
-      }
-      .profile-intro {
-        grid-template-columns: 1fr;
-        padding: 80px 5%;
-      }
-      .contact-inner-grid {
-        grid-template-columns: 1fr;
-        padding: 0;
-        gap: 40px;
-      }
-      .tech-badge {
-        width: 145px;
-      }
-    }
-
-    /* Profile Photo Styling */
-    .avatar-container {
-      position: relative;
+    /* ---- divider ---- */
+    .divider {
       width: 100%;
-      max-width: 360px;
-      aspect-ratio: 3 / 4;
-      animation: floatPhoto 6s ease-in-out infinite;
-      z-index: 10;
+      height: 1px;
+      background-color: var(--divider);
+      margin: 25px 0;
     }
 
-    .avatar-glow {
-      position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
-      background: linear-gradient(135deg, var(--port-primary), var(--port-secondary));
-      filter: blur(25px);
-      opacity: 0.35;
-      border-radius: 28px;
-      z-index: 1;
-      transition: var(--port-transition);
-    }
-
-    .avatar-frame {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 2px solid rgba(255, 255, 255, 0.08);
-      background: var(--port-bg-darker);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.55);
-      transition: var(--port-transition);
-    }
-
-    .avatar-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: var(--port-transition);
-    }
-
-    .avatar-badge {
-      position: absolute;
-      bottom: 20px;
-      right: -15px;
-      background: rgba(15, 10, 30, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--port-border-hover);
-      padding: 8px 16px;
+    /* ---- formula box ---- */
+    .formula-box {
+      background-color: var(--formula-bg);
+      border: 1px solid var(--formula-border);
       border-radius: 12px;
-      z-index: 3;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-      color: white;
-      font-family: var(--port-font-title);
+      padding: 14px 18px;
+      margin-top: 20px;
+      display: none;
+      animation: slideDown 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .formula-box.show {
+      display: block;
+    }
+
+    .formula-label {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 10px;
+      color: var(--formula-label);
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .formula-text {
       font-size: 13px;
-      font-weight: 600;
-      transition: var(--port-transition);
+      color: var(--formula-text);
     }
 
-    .avatar-badge .badge-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--port-secondary);
-      border-radius: 50%;
-      box-shadow: 0 0 8px var(--port-secondary);
+    /* ---- footer ---- */
+    .footer {
+      margin-top: 30px;
+      font-size: 12px;
+      color: var(--footer);
+      text-align: center;
+      z-index: 1;
     }
 
-    /* Hover interactions */
-    .avatar-container:hover .avatar-frame {
-      transform: translateY(-5px);
-      border-color: rgba(168, 85, 247, 0.4);
-      box-shadow: 0 25px 50px rgba(168, 85, 247, 0.15);
+    /* ---- responsive ---- */
+    @media (max-width: 500px) {
+      .card { padding: 35px 25px; }
+      .header h1 { font-size: 30px; }
     }
 
-    .avatar-container:hover .avatar-img {
-      transform: scale(1.04);
-    }
-
-    .avatar-container:hover .avatar-glow {
-      opacity: 0.55;
-      filter: blur(30px);
-      transform: scale(1.03);
-    }
-
-    .avatar-container:hover .avatar-badge {
-      transform: translateX(5px);
-      border-color: var(--port-secondary);
-    }
-
-    @keyframes floatPhoto {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-10px);
-      }
-    }
   </style>
 </head>
 <body>
 
-  <!-- Background Mesh Blobs -->
-  <div class="mesh-glow-left"></div>
-  <div class="mesh-glow-right"></div>
+  <!-- Floating Ambient Glowing Blobs -->
+  <div class="bg-glow bg-glow-1"></div>
+  <div class="bg-glow bg-glow-2"></div>
 
-  <!-- HEADER NAVIGATION -->
-  <header class="header-nav" id="portfolio-header">
-    <a href="#" class="p-brand-logo">
-      <span class="logo-badge">DK</span>
-      <span class="logo-text">Daksh<span>.</span></span>
-    </a>
-    
-    <ul class="p-nav-menu">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Tech Stack</a></li>
-      <li><a href="#projects">My Works</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-
-    <a href="#contact" class="p-hire-btn">Hire Me</a>
-  </header>
-
-  <!-- HERO PRESENTATION -->
-  <section class="hero-wrapper">
-    <div class="hero-details-box">
-      <div class="avail-status-tag">
-        <span class="blink-dot"></span>
-        Available for new projects
-      </div>
-
-      <h1>Daksh<br><span class="gradient-txt">Karangiya.</span></h1>
-      
-      <p class="job-title-desc">Computer Science Student & Creative Web Developer</p>
-      
-      <p class="bio-desc-para">
-        I am a CS student passionate about building clean, high-performance, and visually stunning web environments. Currently focusing on modern front-end layouts, animations, and clean javascript execution.
-      </p>
-
-      <div class="hero-action-buttons">
-        <a href="#contact" class="btn-custom primary-fill">Get In Touch &rarr;</a>
-        <a href="#" class="btn-custom glass-outline" onclick="triggerResumeSim(event)">Download CV</a>
-      </div>
-
-      <div class="hero-stats metric-stats-row">
-        <div class="metric-col">
-          <div class="metric-num">10+</div>
-          <div class="metric-lbl">Technologies</div>
-        </div>
-        <div class="metric-col">
-          <div class="metric-num">CS</div>
-          <div class="metric-lbl">Undergrad</div>
-        </div>
-        <div class="metric-col">
-          <div class="metric-num">100%</div>
-          <div class="metric-lbl">Commitment</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="avatar-showcase">
-      <div class="avatar-container">
-        <div class="avatar-glow"></div>
-        <div class="avatar-frame">
-          <img src="profile.jpg" alt="Daksh Karangiya" class="avatar-img">
-        </div>
-        <div class="avatar-badge">
-          <span class="badge-dot"></span>
-          <span class="badge-text">Web Engineer</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROFILE BIO -->
-  <section class="profile-intro" id="about">
-    <div class="profile-bio-text">
-      <span class="section-tagline">— Core Background</span>
-      <h2 class="section-headline">Engineering digital<br>experiences from<br>Junagadh, India.</h2>
-      <p>Hello! My name is Daksh Karangiya. I am a dedicated Computer Science undergrad student who is highly enthusiastic about developing structured, interactive, and responsive websites.</p>
-      <p>My technical journey commenced with the fundamental concepts of C and C++ programming. Today, I am focused on scaling my knowledge into complete web application architectures using HTML, CSS, JavaScript, and database systems.</p>
-    </div>
-    
-    <div class="profile-facts-grid">
-      <div class="fact-card">
-        <div class="fact-card-label">Developer</div>
-        <div class="fact-card-val">Daksh Karangiya</div>
-      </div>
-      <div class="fact-card">
-        <div class="fact-card-label">Specialty</div>
-        <div class="fact-card-val">Computer Science</div>
-      </div>
-      <div class="fact-card">
-        <div class="fact-card-label">Base Location</div>
-        <div class="fact-card-val">Junagadh, Gujarat</div>
-      </div>
-      <div class="fact-card">
-        <div class="fact-card-label">Availability</div>
-        <div class="fact-card-val" style="color: var(--port-secondary);">Active ✓</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SKILLS ARENA -->
-  <section class="skills-arena" id="skills">
-    <div class="arena-title-box">
-      <span class="section-tagline">— Tech Stack</span>
-      <h2 class="section-headline">Core Competencies</h2>
-    </div>
-
-    <div class="badges-collection">
-      <div class="tech-badge">
-        <span class="tech-badge-icon">⚙️</span>
-        <div class="tech-badge-name">C Lang</div>
-        <div class="tech-badge-sub">Syntax & Logic</div>
-      </div>
-      
-      <div class="tech-badge">
-        <span class="tech-badge-icon">🔧</span>
-        <div class="tech-badge-name">C++</div>
-        <div class="tech-badge-sub">OOP Paradigms</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">🌐</span>
-        <div class="tech-badge-name">HTML5</div>
-        <div class="tech-badge-sub">Semantic Layouts</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">🎨</span>
-        <div class="tech-badge-name">CSS3</div>
-        <div class="tech-badge-sub">Flexbox & Grid</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">⚡</span>
-        <div class="tech-badge-name">JavaScript</div>
-        <div class="tech-badge-sub">Dynamic DOM</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">☕</span>
-        <div class="tech-badge-name">Java</div>
-        <div class="tech-badge-sub">Core Execution</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">⚛️</span>
-        <div class="tech-badge-name">ReactJS</div>
-        <div class="tech-badge-sub">SPA Components</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">▲</span>
-        <div class="tech-badge-name">NextJS</div>
-        <div class="tech-badge-sub">SSR & Routing</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">🍃</span>
-        <div class="tech-badge-name">MongoDB</div>
-        <div class="tech-badge-sub">NoSQL Database</div>
-      </div>
-
-      <div class="tech-badge">
-        <span class="tech-badge-icon">🐳</span>
-        <div class="tech-badge-name">Docker</div>
-        <div class="tech-badge-sub">Containers</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- WORKS SHOWCASES -->
-  <section class="portfolio-works" id="projects">
-    <div class="arena-title-box" style="text-align: left; margin: 0 0 50px;">
-      <span class="section-tagline">— Featured Work</span>
-      <h2 class="section-headline">Personal Projects</h2>
-    </div>
-
-    <div class="portfolio-grid">
-      <div class="portfolio-item">
-        <span class="work-cat-tag">Web Application</span>
-        <h3>Fit24 Landing Page</h3>
-        <p>A high-end, responsive landing page built for Fit24 Fitness Club. Includes customized, interactive BMI calculators and dynamic glassmorphic card animations.</p>
-        <a href="https://daksh-2256.github.io/FIT24/" target="_blank" class="work-anchor-link">View Project &rarr;</a>
-      </div>
-
-      <div class="portfolio-item">
-        <span class="work-cat-tag">UI / UX</span>
-        <h3>Interactive Shell Showcase</h3>
-        <p>This developer portfolio. Styled from scratch using CSS variables, custom variables, responsive grids, and featuring an emulator terminal typing script.</p>
-        <a href="#" class="work-anchor-link">Current View &rarr;</a>
-      </div>
-
-      <div class="portfolio-item">
-        <span class="work-cat-tag">Web Application</span>
-        <h3>Hospital Management System</h3>
-        <p>A comprehensive Hospital Management System designed to handle patient records, doctor scheduling, and administrative operations efficiently.</p>
-        <a href="https://hospital-management-system-wheat-gamma.vercel.app/?_vercel_share=FImIIwIWtsNV5MoBhrDsCe9Rk5FBIi50" target="_blank" class="work-anchor-link">View Project &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT & FORMS -->
-  <section class="contact-container" id="contact">
-    <div class="arena-title-box" style="margin-bottom: 30px;">
-      <span class="section-tagline">— Communications</span>
-      <h2 class="section-headline">Start A Conversation</h2>
-    </div>
-
-    <div class="contact-inner-grid">
-      <div class="contact-meta-txt">
-        <p>If you would like to work together, discuss a software concept, or inquire about open opportunities, please drop a line! I will get back to you as soon as possible.</p>
-        
-        <div class="contact-ways-pack">
-          <a href="mailto:dakshkarangiya84@gmail.com" class="contact-channel-item">
-            <div class="channel-icon">📧</div>
-            <div>
-              <div class="channel-meta-lbl">Direct Email</div>
-              <div class="channel-meta-val">dakshkarangiya84@gmail.com</div>
-            </div>
-          </a>
-          
-          <a href="tel:+919328052802" class="contact-channel-item">
-            <div class="channel-icon">📞</div>
-            <div>
-              <div class="channel-meta-lbl">Mobile Phone</div>
-              <div class="channel-meta-val">+91 93280 52802</div>
-            </div>
-          </a>
-
-          <div class="contact-channel-item">
-            <div class="channel-icon">📍</div>
-            <div>
-              <div class="channel-meta-lbl">Resident Base</div>
-              <div class="channel-meta-val">Junagadh, Gujarat, India</div>
-            </div>
-          </div>
-        </div>
-
-        <a href="https://www.linkedin.com/in/mendapara-krish-31ba7631a" target="_blank" class="linked-badge-card">
-          <div class="badge-icon">💼</div>
-          <div class="badge-name">Connect on LinkedIn</div>
-          <div class="badge-handle">Daksh Karangiya</div>
-        </a>
-      </div>
-
-      <!-- Contact form -->
-      <form class="contact-interactive-form" onsubmit="handleSendMail(event)">
-        <div class="form-group-item">
-          <label for="contact-name">Full Name</label>
-          <input type="text" id="contact-name" placeholder="e.g. John Doe" required>
-        </div>
-
-        <div class="form-group-item">
-          <label for="contact-email">Email Address</label>
-          <input type="email" id="contact-email" placeholder="e.g. name@email.com" required>
-        </div>
-
-        <div class="form-group-item">
-          <label for="contact-msg">Message Query</label>
-          <textarea id="contact-msg" rows="5" placeholder="How can I assist you?" required></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit-mail">Submit Message</button>
-      </form>
-    </div>
-  </section>
-
-  <!-- SUCCESS MODAL POPUP -->
-  <div class="success-modal-overlay" id="success-dialog">
-    <div class="modal-box-card">
-      <div class="modal-tick-icon">✓</div>
-      <h4 id="modal-title">Message Sent!</h4>
-      <p id="modal-body">Thank you for reaching out. Your simulation message was sent successfully to Daksh.</p>
-      <button class="btn-modal-close" onclick="closeSuccessDialog()">Close Window</button>
-    </div>
+  <!-- Dark / Light Toggle -->
+  <div class="toggle-wrap">
+    <button class="toggle-btn" onclick="toggleMode()" id="toggleBtn">
+      ☀️ Light Mode
+    </button>
   </div>
 
-  <!-- FOOTER -->
-  <footer class="footer-wrapper">
-    <a href="#" class="footer-logo">
-      <span class="logo-badge">DK</span>
-      <span class="logo-text">Daksh<span>.</span></span>
-    </a>
-    <p>© 2026 <span>Daksh Karangiya</span>. Designed with ❤️ using HTML & CSS.</p>
-  </footer>
+  <!-- Header -->
+  <div class="header">
+    <h1>🌡️ Temperature <span>Converter</span></h1>
+    <p>Convert temperature between Celsius, Fahrenheit and Kelvin</p>
+  </div>
 
-  <!-- SCRIPTING LOGIC -->
+  <!-- Main Card -->
+  <div class="card">
+
+    <label class="input-label" for="tempInput">Enter Temperature Value</label>
+    <input
+      type="number"
+      id="tempInput"
+      class="input-field"
+      placeholder="e.g. 100"
+    />
+
+    <label class="input-label" for="conversionType">Select Conversion Type</label>
+    <select id="conversionType" class="select-field">
+      <option value="">-- Select Conversion --</option>
+      <option value="c_to_f">Celsius → Fahrenheit</option>
+      <option value="f_to_c">Fahrenheit → Celsius</option>
+      <option value="c_to_k">Celsius → Kelvin</option>
+      <option value="k_to_c">Kelvin → Celsius</option>
+      <option value="f_to_k">Fahrenheit → Kelvin</option>
+      <option value="k_to_f">Kelvin → Fahrenheit</option>
+    </select>
+
+    <button class="convert-btn" onclick="convertTemperature()">
+      Convert Temperature
+    </button>
+
+    <div class="result-box" id="resultBox">
+      <div class="result-label" id="resultLabel"></div>
+      <div class="result-value" id="resultValue"></div>
+      <div class="result-unit" id="resultUnit"></div>
+      <div class="error-msg" id="errorMsg"></div>
+    </div>
+
+    <div class="formula-box" id="formulaBox">
+      <div class="formula-label">Formula Used</div>
+      <div class="formula-text" id="formulaText"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <p style="font-size: 13px; color: var(--hint); text-align: center;">
+      Enter a value and select a conversion type to get result
+    </p>
+
+  </div>
+
+  <div class="footer">
+    Made with HTML, CSS &amp; JavaScript
+  </div>
+
   <script>
-    // Header class list change on scroll
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('portfolio-header');
-      if (window.scrollY > 40) {
-        header.classList.add('sticky-active');
+
+    // toggle dark / light mode
+    function toggleMode() {
+      var html = document.documentElement;
+      var btn = document.getElementById("toggleBtn");
+
+      if (html.getAttribute("data-theme") === "dark") {
+        html.setAttribute("data-theme", "light");
+        btn.innerHTML = "🌙 Dark Mode";
       } else {
-        header.classList.remove('sticky-active');
+        html.setAttribute("data-theme", "dark");
+        btn.innerHTML = "☀️ Light Mode";
+      }
+    }
+
+    // convert temperature
+    function convertTemperature() {
+
+      var inputValue = document.getElementById("tempInput").value;
+      var conversionType = document.getElementById("conversionType").value;
+
+      var resultBox = document.getElementById("resultBox");
+      var resultLabel = document.getElementById("resultLabel");
+      var resultValue = document.getElementById("resultValue");
+      var resultUnit = document.getElementById("resultUnit");
+      var errorMsg = document.getElementById("errorMsg");
+      var formulaBox = document.getElementById("formulaBox");
+      var formulaText = document.getElementById("formulaText");
+
+      // clear old result
+      resultLabel.innerHTML = "";
+      resultValue.innerHTML = "";
+      resultUnit.innerHTML = "";
+      errorMsg.innerHTML = "";
+      resultBox.className = "result-box";
+      formulaBox.className = "formula-box";
+
+      // check if input is empty
+      if (inputValue === "" || inputValue === null) {
+        resultBox.className = "result-box error";
+        errorMsg.innerHTML = "⚠️ Please enter a temperature value first!";
+        return;
+      }
+
+      // check if conversion type is selected
+      if (conversionType === "") {
+        resultBox.className = "result-box error";
+        errorMsg.innerHTML = "⚠️ Please select a conversion type!";
+        return;
+      }
+
+      var temp = parseFloat(inputValue);
+
+      // check valid number
+      if (isNaN(temp)) {
+        resultBox.className = "result-box error";
+        errorMsg.innerHTML = "⚠️ Please enter a valid number!";
+        return;
+      }
+
+      var result = 0;
+      var fromUnit = "";
+      var toUnit = "";
+      var formula = "";
+
+      if (conversionType === "c_to_f") {
+        result = (temp * 9/5) + 32;
+        fromUnit = "°C"; toUnit = "°F";
+        formula = "°F = (°C × 9/5) + 32";
+      }
+      else if (conversionType === "f_to_c") {
+        result = (temp - 32) * 5/9;
+        fromUnit = "°F"; toUnit = "°C";
+        formula = "°C = (°F - 32) × 5/9";
+      }
+      else if (conversionType === "c_to_k") {
+        result = temp + 273.15;
+        fromUnit = "°C"; toUnit = "K";
+        formula = "K = °C + 273.15";
+      }
+      else if (conversionType === "k_to_c") {
+        if (temp < 0) {
+          resultBox.className = "result-box error";
+          errorMsg.innerHTML = "⚠️ Kelvin value cannot be less than 0!";
+          return;
+        }
+        result = temp - 273.15;
+        fromUnit = "K"; toUnit = "°C";
+        formula = "°C = K - 273.15";
+      }
+      else if (conversionType === "f_to_k") {
+        result = (temp - 32) * 5/9 + 273.15;
+        fromUnit = "°F"; toUnit = "K";
+        formula = "K = (°F - 32) × 5/9 + 273.15";
+      }
+      else if (conversionType === "k_to_f") {
+        if (temp < 0) {
+          resultBox.className = "result-box error";
+          errorMsg.innerHTML = "⚠️ Kelvin value cannot be less than 0!";
+          return;
+        }
+        result = (temp - 273.15) * 9/5 + 32;
+        fromUnit = "K"; toUnit = "°F";
+        formula = "°F = (K - 273.15) × 9/5 + 32";
+      }
+
+      result = Math.round(result * 100) / 100;
+
+      resultBox.className = "result-box success";
+      resultLabel.innerHTML = "Converted Result";
+      resultValue.innerHTML = result + " " + toUnit;
+      resultUnit.innerHTML = temp + fromUnit + " = " + result + toUnit;
+
+      formulaBox.className = "formula-box show";
+      formulaText.innerHTML = formula;
+    }
+
+    // enter key support
+    document.getElementById("tempInput").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        convertTemperature();
       }
     });
 
-    // Simulated terminal typewriter effect
-    const typedTarget = document.getElementById('typed-command-txt');
-    const termBody = document.getElementById('terminal-content');
-    
-    if (typedTarget && termBody) {
-      const commandsArray = [
-        { text: "npm install --save-dev web-core", output: "added 12 packages, and audited 13 packages in 0.8s" },
-        { text: "node compile.js", output: "✓ Assets bundled successfully.<br>✓ Main template compiled." },
-        { text: "clear", action: "clear" }
-      ];
-
-      let cmdIndex = 0;
-      let charIndex = 0;
-
-      function runTypingCycle() {
-        if (cmdIndex >= commandsArray.length) {
-          cmdIndex = 0; // restart
-        }
-
-        const currentCommand = commandsArray[cmdIndex];
-        typedTarget.innerHTML = "";
-        charIndex = 0;
-
-        function typeChar() {
-          if (charIndex < currentCommand.text.length) {
-            typedTarget.innerHTML += currentCommand.text.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeChar, 70 + Math.random() * 40);
-          } else {
-            // command fully typed
-            setTimeout(() => {
-              if (currentCommand.action === "clear") {
-                // clear history except the baseline
-                const outputLines = termBody.querySelectorAll('.console-temp-line');
-                outputLines.forEach(l => l.remove());
-              } else {
-                // print output
-                const newOutput = document.createElement('div');
-                newOutput.className = 'console-line console-temp-line';
-                newOutput.style.color = '#00f5d4';
-                newOutput.innerHTML = currentCommand.output;
-                
-                // append prompt repeat before output
-                const prevPrompt = document.createElement('div');
-                prevPrompt.className = 'console-line console-temp-line';
-                prevPrompt.innerHTML = `<span class="console-prompt">daksh$</span> ${currentCommand.text}`;
-
-                termBody.insertBefore(prevPrompt, document.getElementById('live-typing-line'));
-                termBody.insertBefore(newOutput, document.getElementById('live-typing-line'));
-              }
-
-              cmdIndex++;
-              setTimeout(runTypingCycle, 1500); // wait and run next
-            }, 600);
-          }
-        }
-
-        typeChar();
-      }
-
-      // start typing script
-      setTimeout(runTypingCycle, 1000);
-    }
-
-    // Form submission simulated email handler
-    function handleSendMail(e) {
-      e.preventDefault();
-      
-      const name = document.getElementById('contact-name').value;
-      const email = document.getElementById('contact-email').value;
-      
-      document.getElementById('modal-title').innerText = "Message Received!";
-      document.getElementById('modal-body').innerText = `Hi ${name}, thank you for sending a message. Your query from ${email} has been logged in Daksh's workspace.`;
-      
-      // show modal
-      document.getElementById('success-dialog').classList.add('active');
-
-      // reset form fields
-      e.target.reset();
-    }
-
-    // Resume click simulation handler
-    function triggerResumeSim(e) {
-      e.preventDefault();
-      document.getElementById('modal-title').innerText = "Downloading Resume!";
-      document.getElementById('modal-body').innerText = "Daksh's CV download was successfully simulated in your local web environment.";
-      document.getElementById('success-dialog').classList.add('active');
-    }
-
-    // Close success overlay window
-    function closeSuccessDialog() {
-      document.getElementById('success-dialog').classList.remove('active');
-    }
   </script>
+
 </body>
 </html>
